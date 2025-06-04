@@ -9,19 +9,24 @@ def agregar(nombre_dispositivo,marca,modelo,tipo,color,temperatura,tiempo,consum
                    "consumo_energia": consumo_energia,"voltaje":voltaje,"ubicacion":ubicacion,"estado":estado}
     
     list_dispositivo.append(dispositivo)  
-    print("\n Se agrego con exito")
+    return "\n Se agrego con exito"
     
 
 def mostrar(): # Funcion para mostar todos los dispositivos
     
     if len(list_dispositivo)== 0:
+        
         return "Sin dispositivos"
     
+    lista_dispositivos = []
     
     for dispositivo in list_dispositivo:
+        
         encontrado = True
         
-        print(dispositivo)
+        lista_dispositivos.append(dispositivo)
+        
+    return lista_dispositivos
 
 #Funcion para buscar dispositivo p
 def buscar(busqueda):
@@ -31,11 +36,14 @@ def buscar(busqueda):
     for dispositivo in list_dispositivo:
         
         if dispositivo['nombre_dispositivo'] == busqueda:
+            
             encontrado = True
+            
             return(dispositivo) 
         
     if encontrado== False:
-        print("No se encontro el dispositivo")
+        
+        return "No se encontro el dispositivo"
 
 #Funcion para eliminar un dispositivo
 def eliminar(busqueda):
@@ -45,16 +53,16 @@ def eliminar(busqueda):
     for dispositivo in list_dispositivo:
         
         if dispositivo['nombre_dispositivo'] == busqueda:
+            
             encontrado = True
+            
             list_dispositivo.remove(dispositivo)
-            return(dispositivo)
-        
-        
+            
     if encontrado == True:
-        print("Se Elimino con exito")
+        return "Se Elimino con exito"
         
     if encontrado== False:
-        print("No se encontro el dispositivo")
+        return "No se encontro el dispositivo"
 
 #Funcion para Apagar luces 
 def apagar_luces(busqueda):
@@ -73,35 +81,34 @@ def prender_luces(busqueda):
         if dispositivo["tipo"] == 2 and dispositivo["ubicacion"] == busqueda:
             
             dispositivo["estado"]=1
+            
+    return "Las luces fueron encendidas"
 
 #Funciones para mostrar luces prendidas
 def mostrar_luces_prendidos():
+    
+    luces_prendidas = []
+    
     for dispositivo in list_dispositivo:
         
         if dispositivo["estado"] == 1 and dispositivo["tipo"]==2:
             
-            print(f'Las luces de {dispositivo["ubicacion"]} esta  prendido')
+            luces_prendidas.append(f'Las luces de {dispositivo["ubicacion"]} estan  prendidas')
+    
+    return luces_prendidas
 
 #Funciones para mostrar luces apagado
 def mostrar_luces_apagado():
-    for dispositivo in list_dispositivo:
-        
-        if dispositivo["estado"] == 0 and dispositivo["tipo"]==2:
-            
-            print(f' Las luces de {dispositivo["ubicacion"]} esta  apagado')
-
-#Funcion para mostrar todas las luces 
-def mostrar_luces():
     
     for dispositivo in list_dispositivo:
         
-        if dispositivo["tipo"] == 2:
+        luces_apagadas = []
+        
+        if dispositivo["estado"] == 0 and dispositivo["tipo"]==2:
             
-            if dispositivo["estado"] == 0:
-                print(f'Las luces de {dispositivo["ubicacion"]} esta  apagado')
-            elif dispositivo["estado"] ==1 :
-                print(f'Las luces de {dispositivo["ubicacion"]} esta  prendido ')
-
+            luces_apagadas.append(f'Las luces de {dispositivo["ubicacion"]} estan apagadas')
+    
+    return luces_apagadas
 
 #Funcion para configurar horario para prender las luces.
 def luces_modo_Noche(hora_prendido,minuto_prendido,ubicacion_exterior):
@@ -109,6 +116,7 @@ def luces_modo_Noche(hora_prendido,minuto_prendido,ubicacion_exterior):
     ahora = datetime.now()
     
     hora_actual = ahora.hour 
+    
     minuto_actual = ahora.minute
     
     if hora_prendido == hora_actual and minuto_actual == minuto_prendido:
@@ -118,18 +126,20 @@ def luces_modo_Noche(hora_prendido,minuto_prendido,ubicacion_exterior):
         for dispositivo in list_dispositivo:
             
             if dispositivo["tipo"] == 2 and dispositivo["ubicacion"] ==  ubicacion_exterior:
-                 
-                print(f'Se encendió la luz de {dispositivo["ubicacion"]} con éxito.')
-                
-                dispositivo["estado"] = 1  # encendemo la luz 
+                                
+                dispositivo["estado"] = 1  # encendemos la luz 
                 
                 encendido = True # indicamos que se encontro y se prendio una luz
+                
+                return (f'Se encendió la luz de {dispositivo["ubicacion"]} con éxito.')
              
             # Si no se encontró ningún dispositivo compatible
         if not encendido:
-            print(f" No se encontró ningún dispositivo de iluminación en '{ubicacion_exterior}'.")
+            
+            return (f" No se encontró ningún dispositivo de iluminación en '{ubicacion_exterior}'.")
     else:
-        print(f" No es la hora configurada aún. Hora actual: {hora_actual} minito actual {minuto_actual}, hora configurada: {hora_prendido} minuto configurado {minuto_prendido}")
+        
+        return(f" No es la hora configurada aún. Hora actual: {hora_actual} minito actual {minuto_actual}, hora configurada: {hora_prendido} minuto configurado {minuto_prendido}")
                  
 #Funcion para configurar horario para apagar luces para ahorro de enrgia.     
 def luces_modo_ahorro(hora_apagado,minuto_apagado,ubicacion_exterior):
@@ -147,18 +157,20 @@ def luces_modo_ahorro(hora_apagado,minuto_apagado,ubicacion_exterior):
         for dispositivo in list_dispositivo:
             
             if dispositivo["tipo"] == 2 and dispositivo["ubicacion"] ==  ubicacion_exterior:
-                 
-                print(f'Se encendió la luz de {ubicacion_exterior} con éxito.')
                 
                 dispositivo["estado"] = 0  # encendemo la luz 
                 
                 encendido = True # indicamos que se encontro y se prendio una luz
+                
+                return (f'Se encendió la luz de {ubicacion_exterior} con éxito.')
              
             # Si no se encontró ningún dispositivo compatible
         if not encendido:
-            print(f" No se encontró ningún dispositivo de iluminación en '{ubicacion_exterior}'.")
+            
+            return(f" No se encontró ningún dispositivo de iluminación en '{ubicacion_exterior}'.")
     else:
-        print(f" No es la hora configurada aún. Hora actual: {hora_actual} minuto actual: {minuto_actual}, hora configurada: {hora_apagado} minuto configurado: {minuto_apagado}")
+        
+        return(f" No es la hora configurada aún. Hora actual: {hora_actual} minuto actual: {minuto_actual}, hora configurada: {hora_apagado} minuto configurado: {minuto_apagado}")
  
 def calefacion_ambiente(temperatura_hoy):
     
@@ -171,9 +183,9 @@ def calefacion_ambiente(temperatura_hoy):
                 if dispositivo["tipo"]== 3 :
             
                     dispositivo["temperatura "]= 24
-                    print(f'Se prendio automaticamente el {dispositivo["nombre_dispositivo"]} ahora la temperatura es de 24ºC ')
+                    
+                    return(f'Se prendio automaticamente el {dispositivo["nombre_dispositivo"]} ahora la temperatura es de 24ºC ')
               
-            
         elif temperatura_hoy >=26:
             
             for dispositivo in list_dispositivo:
@@ -181,9 +193,15 @@ def calefacion_ambiente(temperatura_hoy):
                 if dispositivo["tipo"]== 3 :
             
                     dispositivo["temperatura "]= 20
-                    print(f'Se prendio automaticamente el {dispositivo["nombre_dispositivo"]} ahora la temperatura es de 20ºC ')
-              
-            
-            
-            
-     
+                    
+                    return(f'Se prendio automaticamente el {dispositivo["nombre_dispositivo"]} ahora la temperatura es de 20ºC ')
+                
+#Creamos una funcion para validar si el usuario ingreso un numero entero
+
+def validar_entero(valor):
+    
+    while valor.isnumeric() == False: 
+        
+        valor = (input("El valor debe ser un numero entero, intente de nuevo: "))
+                                 
+    return int(valor)

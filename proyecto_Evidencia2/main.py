@@ -1,12 +1,14 @@
 
 import modulo # importamos todos los metodos del modulo.py
 
+
 if __name__ == "__main__":
     
  
 
     while True: # Creamos un funcion repetitiva para que se pueda usar nuevamente el menu 
     # Creamos el menu donde damos opciones para el usuario. 
+        
         print("\n::::::::::::::::::::::::::::::")
         print("::      PANEL PRINCIPAL     ::")
         print("::::::::::::::::::::::::::::::")
@@ -36,7 +38,7 @@ if __name__ == "__main__":
                             case "1": 
                          
                                 # Ingresamos los datos para pasarlos como parametro a las funciones 
-        
+                                        
                                 nombre_dispositivo = input("\nIngrese el nombre del Dispositivo: ").lower()  
                     
                                 marca = input("Ingrese la marca del dispositivo: ").lower()
@@ -58,17 +60,17 @@ if __name__ == "__main__":
                                 temperatura = 0
                                 
                                 tiempo = 0
-                    
-                                consumo_energia = int(input("ingrese el consumo de energia del dispositivo: "))
-                    
-                                voltaje = int(input("Ingrese el voltaje del Electrodomostico: "))
                                 
-                                ubicacion = input("Ingrese la ubicacion donde se colocara: ").lower()
-                                estado = 0 
+                                consumo_energia = modulo.validar_entero((input("ingrese el consumo de energia del dispositivo: ")))
+                                
+                                voltaje = modulo.validar_entero(input("ingrese el voltaje del dispositivo: "))
                     
-                                modulo.agregar(nombre_dispositivo,marca,modelo,tipo,color,temperatura,tiempo,consumo_energia,voltaje,ubicacion,estado) # Aqui agregamos los datos a la funcion agregar.
-
-
+                                estado = 0 
+                                
+                                ubicacion = "pendiente"
+                    
+                                print(modulo.agregar(nombre_dispositivo,marca,modelo,tipo,color,temperatura,tiempo,consumo_energia,voltaje,ubicacion,estado)) # Aqui agregamos los datos a la funcion agregar.
+                                
                             case "2" : 
 
                                 busqueda = input("\nIngrese el nombre del dispositivo que desea encontrar: ") # ingresamos el dispositivo a buscar
@@ -83,7 +85,7 @@ if __name__ == "__main__":
                                 print("\n::::::::::::::::::::::::::::::")
                                 print("::  Todos los dispositivos  ::")
                                 print("::::::::::::::::::::::::::::::")
-                                modulo.mostrar()# aqui imprimimos la funcion donde se muestra la listas y sus datos
+                                print(modulo.mostrar())# aqui imprimimos la funcion donde se muestra la listas y sus datos
                  
     
                             case "4" :
@@ -112,7 +114,7 @@ if __name__ == "__main__":
                         print("::::::::::::::::::::::::::::::")
 
                         print("Opcion 1 : Prender / Apagar luces")
-                        print("Opcion 2 : Mostrar Prendio/ Apagado / todo")
+                        print("Opcion 2 : Mostrar Prendido/ Apagado / todo")
                         print("Opcion 3 : Configurar Modo noche")
                         print("Opcion 4 : Configurar Modo Ahorro de Energia")
                         print("Opcion 5 : Volver al menu principal")
@@ -128,12 +130,17 @@ if __name__ == "__main__":
                                 
                                 
                                 if opcion ==1 :
+                                    
                                     busqueda = input(" Que habitacion quiere prender las luces?: ")
                                     
-                                    modulo.prender_luces(busqueda)
+                                    print(modulo.prender_luces(busqueda))
+                                    
                                 elif opcion ==2:
+                                    
                                     busqueda = input(" Que habitacion quiere pagar las luces?: ")
+                                    
                                     modulo.apagar_luces()
+                                    
                             case "2":
                                 
                                 print("\n:::::::::::::::::::::::::")
@@ -150,7 +157,7 @@ if __name__ == "__main__":
                                         print("\n:::::::::::::::::::")
                                         print(":: LUCES APAGADA ::")
                                         print(":::::::::::::::::::")
-                                        modulo.mostrar_luces_apagado()
+                                        print(modulo.mostrar_luces_apagado())
                                         
                                         pass
                                     
@@ -158,7 +165,7 @@ if __name__ == "__main__":
                                         print("\n:::::::::::::::::::::")
                                         print(":: LUCES PRENDIDAS ::")
                                         print(":::::::::::::::::::::")
-                                        modulo.mostrar_luces_prendidos()
+                                        print(modulo.mostrar_luces_prendidos())
                                         
                                         pass
                                     
@@ -166,14 +173,17 @@ if __name__ == "__main__":
                                         print("\n::::::::::::::::::::::::")
                                         print(":: TODAS HABITACIONES ::")
                                         print("::::::::::::::::::::::::")
-                                        modulo.mostrar_luces()
+                                        print(modulo.mostrar_luces_prendidos())
+                                        print(modulo.mostrar_luces_apagado())
                                         
                                         pass
                                     
                                     case "4": 
                                     
                                         break
+                                    
                                     case _:
+                                        
                                         print("Error : Ingreso una opcion no valida")
                                     
                             case "3": 
@@ -181,53 +191,61 @@ if __name__ == "__main__":
                                 print(":: CONFIGURACION MODO NOCHE ::")
                                 print("::::::::::::::::::::::::::::::")
                                         
-                                hora_prendido= int(input("Ingrese la hora a que se prenderan las luces: "))
-                                minuto_prendio = int(input("Ingrese los minutos: "))
+                                hora_prendido= modulo.validar_entero(input("Ingrese la hora a que se prenderan las luces: "))
+                               
+                                minuto_prendio = modulo.validar_entero(input("Ingrese los minutos: "))
+                                
                                 while True:
-                                            
-                                        
+                                                
                                     ubicacion_exterior = input("Ingrese la ubicacion de la casa: ")
     
-                                    modulo.luces_modo_Noche(hora_prendido,minuto_prendio,ubicacion_exterior)
+                                    print(modulo.luces_modo_Noche(hora_prendido,minuto_prendio,ubicacion_exterior))
                                             
                                     pregunta = input("Quiere Ingresar otra ubicacion de la casa? SI O NO").lower().strip()
-                                    if pregunta == "no":
-                                        break
-                                       
                                     
+                                    if pregunta == "no":
+                                    
+                                        break
+                                                                          
                             case "4":
                                 print("\n::::::::::::::::::::::::::::::")
                                 print(":: CONFIGURACION MODO AHORRO ::")
                                 print(":::::::::::::::::::::::::::::::")
                                         
-                                hora_apagado= int(input("Ingrese la hora a que se apagaran las luces: "))
-                                minuto_apagado = int(input("Ingrese los minutos: "))
+                                hora_apagado= modulo.validar_entero(input("Ingrese la hora a que se apagaran las luces: "))
+                                
+                                minuto_apagado = modulo.validar_entero(input("Ingrese los minutos: "))
+                                
                                 while True:
                                             
-                                        
                                     ubicacion_exterior = input("Ingrese la ubicacion de la casa: ").lower()
     
-                                    modulo.luces_modo_Noche(hora_apagado,minuto_apagado,ubicacion_exterior)
+                                    print(modulo.luces_modo_Noche(hora_apagado,minuto_apagado,ubicacion_exterior))
                                             
                                     pregunta = input("\nQuiere Ingresar otra ubicacion de la casa? SI O NO: ").lower().strip()
+                                    
                                     if pregunta == "no":
+                                        
                                         break
                             case "5": 
+                            
                                 break
-                
+                            
                 case "3":
                     print("\n::::::::::::::::::::::::::")
                     print("::  PANEL DE CALEFACCION  ::")
                     print("::::::::::::::::::::::::::::")
                     
-            
-                    temperatura_hoy = int(input("Ingrese la temepratura de hoy : "))
-                    modulo.calefacion_ambiente(temperatura_hoy)
+                    temperatura_hoy = modulo.validar_entero(input("Ingrese la temepratura de hoy : "))
+                    
+                    print(modulo.calefacion_ambiente(temperatura_hoy))
                     
                 case "4":
+                    
                     break
                 
                 case _:
+                    
                     print("ERROR : Ingreso una opcion incorrecta")
             
                     
